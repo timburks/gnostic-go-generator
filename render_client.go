@@ -40,15 +40,20 @@ func (renderer *Renderer) RenderClient() ([]byte, error) {
 
 	// imports will be automatically added by imports pkg
 
+	f.WriteLine(`// HTTPClient provides a general HTTP calling interface.`)
+	f.WriteLine(`type HTTPClient interface {`)
+	f.WriteLine(`	Do(*http.Request) (*http.Response, error)`)
+	f.WriteLine(`}`)
+
 	f.WriteLine(`// Client represents an API client.`)
 	f.WriteLine(`type Client struct {`)
 	f.WriteLine(`  service string`)
 	f.WriteLine(`  APIKey string`)
-	f.WriteLine(`  client *http.Client`)
+	f.WriteLine(`  client HTTPClient`)
 	f.WriteLine(`}`)
 
 	f.WriteLine(`// NewClient creates an API client.`)
-	f.WriteLine(`func NewClient(service string, c *http.Client) *Client {`)
+	f.WriteLine(`func NewClient(service string, c HTTPClient) *Client {`)
 	f.WriteLine(`	client := &Client{}`)
 	f.WriteLine(`	client.service = service`)
 	f.WriteLine(`  if c != nil {`)
